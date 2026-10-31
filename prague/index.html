@@ -365,7 +365,7 @@ const PLACES = [
 
   // Tchecos
   {id:"lokal", list:"czech", cat:"food", name:"Lokál (rede)", sub:"Tcheco · cerveja de tanque", lat:50.09050, lng:14.42530, q:"Lokál Dlouhááá Prague",
-   html:"<p>A escolha segura: comida tcheca honesta (svíčková, guláš, řízek) e Pilsner Urquell de tanque. São várias unidades, escolha a mais perto:</p><ul><li><b>Lokál Dlouhá</b>, Cidade Velha (a original, a mais conhecida)</li><li><b>Lokál U Bílé kuželky</b>, Malá Strana, perto da Ponte Carlos</li><li><b>Lokál Hamburk</b>, Karlín</li><li><b>Lokál Korunní</b>, Vinohrady</li><li><b>Lokál Nad Stromovkou</b>, Bubeneč</li></ul><p>Para jantar, vale reservar.</p>",
+   html:"<p>A escolha segura: comida tcheca honesta (svíčková, guláš, řízek) e Pilsner Urquell de tanque, das melhores da cidade. São várias unidades, escolha a mais perto:</p><ul><li><b>Lokál Dlouhá</b>, Cidade Velha (a original, a mais conhecida)</li><li><b>Lokál U Bílé kuželky</b>, Malá Strana, perto da Ponte Carlos</li><li><b>Lokál Hamburk</b>, Karlín</li><li><b>Lokál Korunní</b>, Vinohrady</li><li><b>Lokál Nad Stromovkou</b>, Bubeneč</li></ul><p>Para jantar, vale reservar.</p>",
    extraMaps:[["Ver todos os Lokál no Maps","Lokál Ambiente Praha"]]},
   {id:"lokal-kuzelka", list:null, cat:"food", name:"Lokál U Bílé kuželky", lat:50.08680, lng:14.40800, q:"Lokál U Bílé kuželky"},
   {id:"lokal-hamburk", list:null, cat:"food", name:"Lokál Hamburk", lat:50.09280, lng:14.44560, q:"Lokál Hamburk"},
@@ -373,8 +373,8 @@ const PLACES = [
    html:"<p>Metade açougue, metade restaurante. Você escolhe o corte no balcão e come em mesas coletivas. Tartar e hambúrguer famosos. Não aceita reserva, tem fila no almoço.</p>"},
   {id:"nasemaso", list:"czech", cat:"food", name:"Naše Maso", sub:"Tcheco · açougue · Cidade Velha", lat:50.09060, lng:14.42630, q:"Naše maso Dlouhá Prague",
    html:"<p>Açougue com balcão onde se come em pé: chlebíček (sanduíche aberto), tartar, embutidos da casa. Almoço rápido e excelente, a poucos passos do Lokál Dlouhá.</p>"},
-  {id:"kachnicky", list:"czech", cat:"food", name:"U Modré Kachničky", sub:"Tcheco · jantar especial · Malá Strana", lat:50.08560, lng:14.40500, q:"U Modré Kachničky Nebovidská",
-   html:"<p>O \"Patinho Azul\": cozinha tcheca de caça e pato num ambiente antigo e romântico. Mais caro, ótimo para um jantar especial depois do castelo. Reserve.</p>"},
+  {id:"glaubicu", list:"czech", cat:"food", name:"U Glaubiců", sub:"Tcheco · cervejaria · Malá Strana", lat:50.08835, lng:14.40390, q:"U Glaubiců Malostranské náměstí 5",
+   html:"<p>Cervejaria tradicional na praça de Malá Strana, no caminho entre a Ponte Carlos e o castelo. Pilsner Urquell muito bem tirada e um dos melhores preços da cidade para um lugar tão central. Comida tcheca simples para acompanhar.</p>"},
   {id:"kuchyn", list:"czech", cat:"food", name:"Kuchyň", sub:"Tcheco · com vista · ao lado do castelo", lat:50.08960, lng:14.39780, q:"Kuchyň Hradčanské náměstí 1",
    html:"<p>Na praça em frente ao castelo, no Palácio Salm. Comida tcheca, boa cerveja e um terraço com uma das melhores vistas da cidade. Ideal para almoçar na visita ao castelo.</p>"},
   {id:"ukroka", list:"czech", cat:"food", name:"U Kroka", sub:"Tcheco · Vyšehrad", lat:50.06640, lng:14.41940, q:"U Kroka Vratislavova 12",
@@ -408,6 +408,12 @@ const PLACES = [
   {id:"beas", list:"intl", cat:"food", name:"Dhaba Beas", sub:"Indiano vegetariano · várias unidades", lat:50.08060, lng:14.42180, q:"Dhaba Beas Vladislavova",
    html:"<p>Bufê indiano vegetariano pago por peso. Barato, rápido e uma boa pausa da comida pesada. Tem várias unidades pelo centro.</p>",
    extraMaps:[["Ver todas as unidades","Dhaba Beas Praha"]]}
+];
+
+// Guardados: não aparecem no site. Para usar, mova para PLACES.
+const SAVED = [
+  {id:"kachnicky", list:"czech", cat:"food", name:"U Modré Kachničky", sub:"Tcheco · jantar especial · Malá Strana", lat:50.08560, lng:14.40500, q:"U Modré Kachničky Nebovidská",
+   html:"<p>O \"Patinho Azul\": cozinha tcheca de caça e pato num ambiente antigo e romântico. Mais caro, ótimo para um jantar especial depois do castelo. Reserve.</p>"},
 ];
 
 const mapsUrl = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q + (/(Prague|Praha)/.test(q) ? "" : ", Praha"));
