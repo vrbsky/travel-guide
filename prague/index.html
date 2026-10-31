@@ -69,6 +69,18 @@ section > .wrap > h2{font-size:1.5rem;margin-bottom:4px}
 .callout.blue{border-color:var(--river);background:var(--river-soft)}
 .callout strong{display:block;margin-bottom:2px}
 
+details.trips{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:12px}
+details.trips summary{cursor:pointer;list-style:none;padding:14px 16px;font-family:Fraunces,Georgia,serif;font-size:1.12rem;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+details.trips summary::-webkit-details-marker{display:none}
+details.trips summary span{font-family:Inter,sans-serif;font-size:.8rem;font-weight:400;color:var(--muted)}
+details.trips summary::after{content:"+";margin-left:auto;font-family:Inter,sans-serif;font-size:1.4rem;line-height:1;color:var(--roof)}
+details.trips[open] summary::after{content:"−"}
+details.trips .body{padding:0 16px 4px}
+.trip{border-top:1px solid var(--line);padding:12px 0}
+.trip h3{font-size:1.05rem;margin-bottom:2px}
+.trip .sub{color:var(--muted);font-size:.85rem;margin-bottom:6px}
+.trip p{margin:6px 0}
+
 .grid2{display:grid;grid-template-columns:1fr;gap:0 12px}
 @media (min-width:640px){.grid2{grid-template-columns:1fr 1fr}}
 
@@ -128,10 +140,38 @@ footer{color:var(--muted);font-size:.85rem;padding:28px 0 48px}
     <h2>Se tiver mais tempo</h2>
     <p class="lead">Melhor curtir a cidade com calma: parques, mirantes e bairros onde os locais vivem.</p>
     <div id="list-more"></div>
-    <div class="callout blue">
-      <strong>E Kutná Hora?</strong>
-      Fica fora de Praga, cerca de 1 hora de trem, e toma um dia inteiro. É famosa pela capela decorada com ossos. Vale só se você já viu o principal e está com tempo sobrando. Para a maioria, um dia a mais curtindo Praga rende mais.
-    </div>
+    <details class="trips">
+      <summary>Passeios fora de Praga <span>opcionais, toque para abrir</span></summary>
+      <div class="body">
+        <p class="lead">Só valem se você já viu o principal e tem dias sobrando. Para a maioria, um dia a mais curtindo Praga rende mais. Trens: <a href="https://www.cd.cz/en/" target="_blank" rel="noopener">České dráhy</a>; ônibus: <a href="https://regiojet.com/" target="_blank" rel="noopener">RegioJet</a> ou FlixBus.</p>
+        <div class="trip">
+          <h3>Kutná Hora</h3>
+          <div class="sub">Cerca de 1 hora de trem · dia inteiro</div>
+          <p>Cidade histórica famosa pela capela decorada com ossos (Ossuário de Sedlec) e pela Catedral de Santa Bárbara.</p>
+        </div>
+        <div class="trip">
+          <h3>Karlštejn</h3>
+          <div class="sub">Cerca de 40 minutos de trem · meio dia</div>
+          <p>Castelo gótico de conto de fadas, construído por Carlos IV, sobre uma colina no meio da floresta. Da estação é uma subida de uns 30 minutos a pé. O interior só se visita com guia, e fora da temporada abre em menos dias: confira antes.</p>
+        </div>
+        <div class="trip">
+          <h3>Plzeň e a cervejaria Pilsner Urquell</h3>
+          <div class="sub">Cerca de 1h30 de trem · para quem ama cerveja</div>
+          <p>A cidade onde nasceu a cerveja pilsen. A visita guiada à cervejaria termina nas adegas, com cerveja não filtrada tirada direto do barril de carvalho. Reserve a visita no site.</p>
+          <div class="actions"><a class="btn" href="https://www.prazdrojvisit.cz/en/" target="_blank" rel="noopener">Visita à cervejaria</a></div>
+        </div>
+        <div class="trip">
+          <h3>Karlovy Vary</h3>
+          <div class="sub">Cerca de 2h15 de ônibus · dia inteiro</div>
+          <p>Cidade termal elegante, com colunatas e fontes de água quente que se bebe numa canequinha própria. Terra do licor Becherovka e das wafers de spa (oplatky).</p>
+        </div>
+        <div class="trip">
+          <h3>Český Krumlov</h3>
+          <div class="sub">Cerca de 3 horas de ônibus · melhor dormir lá</div>
+          <p>Cidadezinha medieval numa curva do rio, com castelo, Patrimônio da UNESCO. É linda, mas longe: ida e volta no mesmo dia cansa. Se for, durma uma noite.</p>
+        </div>
+      </div>
+    </details>
   </div></section>
 
   <section id="comer"><div class="wrap">
@@ -342,6 +382,8 @@ const PLACES = [
   {id:"petrin", list:"more", cat:"see", name:"Colina e torre de Petřín", sub:"Malá Strana · opcional, para quem curte caminhar", lat:50.08355, lng:14.39505, q:"Petřín Lookout Tower",
    html:"<p>Uma \"mini Torre Eiffel\" no alto de uma colina arborizada, com vista para a cidade inteira. Não é obrigatório.</p><ul><li><b>Junto com o castelo:</b> só para quem está acostumado a andar bastante. Dá para pegar o bonde 22 ou 23 até a parada Pohořelec, no alto, e ir descendo a pé até Petřín. Senão, melhor fazer em outro dia ou pular.</li><li><b>Funicular (opcional):</b> sobe da estação Újezd, das 7h às 22h15, a cada ~10 min, com vagões novos desde setembro de 2026. Tarifa própria de 100 CZK (90 CZK no app PID Lítačka). Quem tem bilhete de 24 h ou 72 h não paga a mais.</li><li>Dá para subir a pé pelos jardins também, uns 30 minutos.</li></ul>",
    links:[["Funicular (PID)","https://pid.cz/lanova-draha/"]]},
+  {id:"naplavka", list:"more", cat:"park", name:"Náplavka (beira-rio)", sub:"Rašínovo nábřeží, Nové Město", lat:50.06950, lng:14.41450, q:"Náplavka Prague",
+   html:"<p>Calçadão à beira do rio com barcos-bar, comidinhas e cerveja. Aos sábados de manhã tem feira de produtores. Movimentado nas noites quentes.</p>"},
   {id:"petrin-funicular", list:null, cat:"see", name:"Funicular de Petřín (estação Újezd)", lat:50.08130, lng:14.40540, q:"Petřín funicular Újezd"},
 
   // Barco
@@ -361,12 +403,8 @@ const PLACES = [
    html:"<p>Um dos jardins mais antigos de Praga, escondido atrás de muros. Silencioso, com bancos sob árvores frutíferas e pavões. Aberto o ano todo.</p>"},
   {id:"kampa", list:"more", cat:"park", name:"Ilha Kampa e Muro de Lennon", sub:"Malá Strana, embaixo da Ponte Carlos", lat:50.08560, lng:14.40760, q:"Kampa Island Prague",
    html:"<p>Parque à beira-rio com vista para a Ponte Carlos, a dois passos do muro grafitado em homenagem a John Lennon.</p>"},
-  {id:"letna", list:"more", cat:"park", name:"Parque Letná", sub:"Colina ao norte do centro", lat:50.09550, lng:14.42150, q:"Letná Park Prague",
-   html:"<p>Mirante clássico sobre as pontes do Vltava e beer garden popular com os locais. Ótimo no fim da tarde.</p>"},
-  {id:"riegrovy", list:"more", cat:"park", name:"Riegrovy sady", sub:"Vinohrady", lat:50.07850, lng:14.44200, q:"Riegrovy sady",
-   html:"<p>Parque de bairro com gramado em declive e vista para o castelo no pôr do sol. Tem beer garden. Bom para ver o bairro de Vinohrady, onde muitos locais moram.</p>"},
-  {id:"naplavka", list:"more", cat:"park", name:"Náplavka (beira-rio)", sub:"Rašínovo nábřeží, Nové Město", lat:50.06950, lng:14.41450, q:"Náplavka Prague",
-   html:"<p>Calçadão à beira do rio com barcos-bar, comidinhas e cerveja. Aos sábados de manhã tem feira de produtores. Movimentado nas noites quentes.</p>"},
+  {id:"letna", list:"more", cat:"park", name:"Parque Letná", sub:"Colina ao norte do centro · um pouco afastado", lat:50.09550, lng:14.42150, q:"Letná Park Prague",
+   html:"<p>Mirante clássico sobre as pontes do Vltava e beer garden popular com os locais. Ótimo no fim da tarde. Fica do outro lado do rio, longe do resto: é uma subida boa ou um trajeto de bonde, então vale só se tiver tempo sobrando.</p>"},
 
   // Tchecos
   {id:"lokal", list:"czech", cat:"food", name:"Lokál (rede)", sub:"Tcheco · cerveja de tanque", lat:50.09050, lng:14.42530, q:"Lokál Dlouhááá Prague",
@@ -417,6 +455,8 @@ const PLACES = [
 
 // Guardados: não aparecem no site. Para usar, mova para PLACES.
 const SAVED = [
+  {id:"riegrovy", list:"more", cat:"park", name:"Riegrovy sady", sub:"Vinohrady", lat:50.07850, lng:14.44200, q:"Riegrovy sady",
+   html:"<p>Parque de bairro com gramado em declive e vista para o castelo no pôr do sol. Tem beer garden. Bom para ver o bairro de Vinohrady, onde muitos locais moram.</p>"},
   {id:"kachnicky", list:"czech", cat:"food", name:"U Modré Kachničky", sub:"Tcheco · jantar especial · Malá Strana", lat:50.08560, lng:14.40500, q:"U Modré Kachničky Nebovidská",
    html:"<p>O \"Patinho Azul\": cozinha tcheca de caça e pato num ambiente antigo e romântico. Mais caro, ótimo para um jantar especial depois do castelo. Reserve.</p>"},
 ];
