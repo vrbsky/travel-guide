@@ -69,13 +69,14 @@ section > .wrap > h2{font-size:1.5rem;margin-bottom:4px}
 .callout.blue{border-color:var(--river);background:var(--river-soft)}
 .callout strong{display:block;margin-bottom:2px}
 
-details.trips{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:12px}
-details.trips summary{cursor:pointer;list-style:none;padding:14px 16px;font-family:Fraunces,Georgia,serif;font-size:1.12rem;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-details.trips summary::-webkit-details-marker{display:none}
-details.trips summary span{font-family:Inter,sans-serif;font-size:.8rem;font-weight:400;color:var(--muted)}
-details.trips summary::after{content:"+";margin-left:auto;font-family:Inter,sans-serif;font-size:1.4rem;line-height:1;color:var(--roof)}
-details.trips[open] summary::after{content:"−"}
-details.trips .body{padding:0 16px 4px}
+details.fold{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:12px}
+details.fold summary{cursor:pointer;list-style:none;padding:14px 16px;font-family:Fraunces,Georgia,serif;font-size:1.12rem;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+details.fold summary::-webkit-details-marker{display:none}
+details.fold summary span{font-family:Inter,sans-serif;font-size:.8rem;font-weight:400;color:var(--muted)}
+details.fold summary::after{content:"+";margin-left:auto;font-family:Inter,sans-serif;font-size:1.4rem;line-height:1;color:var(--roof)}
+details.fold[open] summary::after{content:"−"}
+details.fold .body{padding:0 16px 4px}
+details.fold .body > .card{background:var(--bg)}
 .trip{border-top:1px solid var(--line);padding:12px 0}
 .trip h3{font-size:1.05rem;margin-bottom:2px}
 .trip .sub{color:var(--muted);font-size:.85rem;margin-bottom:6px}
@@ -128,6 +129,25 @@ footer{color:var(--muted);font-size:.85rem;padding:28px 0 48px}
     <h2>O principal</h2>
     <p class="lead">Dá para fazer quase tudo a pé. Toque em "Abrir no Maps" para navegar até o lugar.</p>
     <div id="list-see"></div>
+    <details class="fold">
+      <summary>Sugestões de roteiro <span>2 ou 3 dias, toque para abrir</span></summary>
+      <div class="body">
+        <p class="lead">Só uma ideia de como juntar as coisas. Os lugares estão nos cards e no mapa.</p>
+        <div class="trip">
+          <h3>Dia 1: Cidade Velha e Malá Strana</h3>
+          <p>Praça da Cidade Velha e Relógio Astronômico de manhã, depois o Bairro Judeu (fechado aos sábados). Almoço no Lokál Dlouhá ou no Naše Maso. À tarde, atravesse a Ponte Carlos, passe pelo Menino Jesus de Praga e pela Ilha Kampa. Cerveja no U Glaubiců.</p>
+        </div>
+        <div class="trip">
+          <h3>Dia 2: Castelo e rio</h3>
+          <p>Castelo cedo, antes das excursões, com Golden Lane e catedral. Almoço no Kuchyň, com vista. Desça a pé por Malá Strana e faça o barco da Veneza de Praga. Fim de tarde na Náplavka.</p>
+        </div>
+        <div class="trip">
+          <h3>Dia 3: Cidade Nova e Vyšehrad</h3>
+          <p>Uma volta no bonde histórico 42 para ver a cidade sentado. Praça Venceslau e Národní třída, com café no Café Louvre. À tarde, Vyšehrad e jantar no U Kroka.</p>
+        </div>
+        <p>Com mais dias: veja "Se tiver mais tempo" e os passeios fora de Praga.</p>
+      </div>
+    </details>
   </div></section>
 
   <section id="barco"><div class="wrap">
@@ -140,7 +160,7 @@ footer{color:var(--muted);font-size:.85rem;padding:28px 0 48px}
     <h2>Se tiver mais tempo</h2>
     <p class="lead">Melhor curtir a cidade com calma: parques, mirantes e bairros onde os locais vivem.</p>
     <div id="list-more"></div>
-    <details class="trips">
+    <details class="fold">
       <summary>Passeios fora de Praga <span>opcionais, toque para abrir</span></summary>
       <div class="body">
         <p class="lead">Só valem se você já viu o principal e tem dias sobrando. Para a maioria, um dia a mais curtindo Praga rende mais. Trens: <a href="https://www.cd.cz/en/" target="_blank" rel="noopener">České dráhy</a>; ônibus: <a href="https://regiojet.com/" target="_blank" rel="noopener">RegioJet</a> ou FlixBus.</p>
@@ -272,6 +292,12 @@ footer{color:var(--muted);font-size:.85rem;padding:28px 0 48px}
     <h2>Dicas práticas</h2>
 
     <div class="card">
+      <h3>Do aeroporto ao centro</h3>
+      <p><b>Com mala, vá de Uber ou Bolt.</b> Funcionam bem, o preço aparece antes no app e leva uns 30 minutos até o centro. Costuma sair entre 20 e 30 euros, conforme o horário. Evite táxi pegado na rua; se preferir táxi, use o ponto oficial do aeroporto.</p>
+      <p><b>De transporte público:</b> ônibus 119 até a estação Nádraží Veleslavín e de lá o metrô A até o centro, com o bilhete comum de 90 minutos. Há também o ônibus Airport Express (AE), direto até a estação central de trem, com bilhete próprio. São opções baratas, mas cansativas com mala.</p>
+    </div>
+
+    <div class="card">
       <h3>Transporte público</h3>
       <p><b>No bonde e no ônibus:</b> entre pela porta com o símbolo de pagamento por aproximação (geralmente a do meio) e <b>compre o bilhete logo que embarcar</b>, no terminal laranja. Paga com cartão ou celular por aproximação, um bilhete por pessoa. O bilhete já sai valendo, não precisa validar.</p>
       <p><b>No metrô:</b> o terminal laranja fica no saguão, <b>antes de descer as escadas</b> para a área paga. Compre ali antes de entrar.</p>
@@ -295,6 +321,16 @@ footer{color:var(--muted);font-size:.85rem;padding:28px 0 48px}
         <li>Se a maquininha ou o caixa eletrônico oferecer converter para reais ou euros, <b>recuse e pague em CZK</b>. A conversão deles é bem pior.</li>
         <li><b>Banheiros públicos são pagos</b>, em geral 10 a 20 CZK. Alguns aceitam cartão ou moeda de euro, outros só moeda tcheca. Vale guardar umas moedas de troco, mas não compensa sacar dinheiro só para isso. O app <b>WC Kompas</b> mostra banheiros gratuitos.</li>
         <li>Gorjeta: costuma-se arredondar ou deixar uns 10% quando o serviço foi bom.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Segurança e golpes</h3>
+      <p>Praga é bem tranquila e segura. Só fique de olho na carteira e no celular nos lugares muito cheios, como a Ponte Carlos, o Relógio Astronômico, o metrô e os bondes lotados.</p>
+      <ul>
+        <li><b>Câmbio:</b> casas com "0% commission" costumam ter cotação péssima. Prefira pagar com cartão ou sacar em caixa eletrônico de banco.</li>
+        <li>Nunca troque dinheiro com quem oferece na rua: as notas costumam ser falsas ou de outro país.</li>
+        <li>Táxi parado em ponto turístico cobra caro. Use Uber ou Bolt.</li>
       </ul>
     </div>
 
@@ -323,6 +359,42 @@ footer{color:var(--muted);font-size:.85rem;padding:28px 0 48px}
       <p>O <b>USE-IT Prague</b> é um mapa gratuito feito por voluntários locais. Ninguém paga para aparecer nele, então as dicas são honestas: bares, cafés, mirantes e bairros fora do circuito turístico.</p>
       <div class="actions"><a class="btn" href="https://www.use-it.travel/cities/prague" target="_blank" rel="noopener">Mapa USE-IT Prague</a></div>
     </div>
+
+    <details class="fold">
+      <summary>Mais dicas <span>idioma, tomada, água, Natal, toque para abrir</span></summary>
+      <div class="body">
+        <div class="trip">
+          <h3>Algumas palavras em tcheco</h3>
+          <ul>
+            <li><b>Dobrý den</b> (dó-brii den): bom dia, olá. Use ao entrar em lojas e restaurantes.</li>
+            <li><b>Děkuji</b> (dié-kui-i): obrigado.</li>
+            <li><b>Prosím</b> (pró-siim): por favor, e também "aqui está".</li>
+            <li><b>Na zdraví!</b> (na zdrá-vii): saúde! No brinde, olhe nos olhos de cada um.</li>
+            <li><b>Dobrou chuť</b> (dó-brou rrut): bom apetite.</li>
+          </ul>
+        </div>
+        <div class="trip">
+          <h3>Tomada e energia</h3>
+          <p>A voltagem é <b>220–230 V</b>. Carregador de celular e notebook funciona sem problema; aparelho só 127 V (secador, chapinha), não. A tomada é de dois pinos redondos: o plugue brasileiro de pinos finos costuma entrar, o de três pinos ou de pinos grossos não. Na dúvida, leve um adaptador universal.</p>
+        </div>
+        <div class="trip">
+          <h3>Água</h3>
+          <p>A água da torneira é boa para beber. Em restaurante, a água é cobrada e geralmente vem com gás (<i>perlivá</i>); sem gás é <i>neperlivá</i>.</p>
+        </div>
+        <div class="trip">
+          <h3>Calçado</h3>
+          <p>O centro é quase todo de pedra irregular e tem subidas, como a do castelo. Leve tênis confortável.</p>
+        </div>
+        <div class="trip">
+          <h3>Emergências</h3>
+          <p>O número de emergência é <b>112</b>, com atendimento em inglês. Farmácia é <i>lékárna</i>, sinalizada com uma cruz verde.</p>
+        </div>
+        <div class="trip">
+          <h3>Mercados de Natal</h3>
+          <p>De 28 de novembro de 2026 a 6 de janeiro de 2027 (datas ainda não confirmadas oficialmente), na Praça da Cidade Velha e na Praça Venceslau, das 10h às 22h. Peça <i>svařák</i> (vinho quente) e uma <i>klobása</i> (linguiça grelhada).</p>
+        </div>
+      </div>
+    </details>
   </div></section>
 
   <section id="mapa"><div class="wrap">
