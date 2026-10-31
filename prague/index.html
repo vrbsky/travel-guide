@@ -76,7 +76,8 @@ details.fold summary span{font-family:Inter,sans-serif;font-size:.8rem;font-weig
 details.fold summary::after{content:"+";margin-left:auto;font-family:Inter,sans-serif;font-size:1.4rem;line-height:1;color:var(--roof)}
 details.fold[open] summary::after{content:"−"}
 details.fold .body{padding:0 16px 4px}
-details.fold .body > .card{background:var(--bg)}
+details.fold .card{background:var(--bg)}
+details.fold .group > .subhead{background:var(--card)}
 .trip{border-top:1px solid var(--line);padding:12px 0}
 .trip h3{font-size:1.05rem;margin-bottom:2px}
 .trip .sub{color:var(--muted);font-size:.85rem;margin-bottom:6px}
@@ -215,88 +216,93 @@ footer{color:var(--muted);font-size:.85rem;padding:28px 0 48px}
   <section id="pratos"><div class="wrap">
     <h2>Pratos típicos</h2>
     <p class="lead">Com o nome como aparece no cardápio, para reconhecer na hora de pedir.</p>
-    <div class="callout">
-      <strong>O que são knedlíky?</strong>
-      Bolinhos de massa cozidos no vapor e servidos em fatias, para molhar no molho. Aparecem em metade dos pratos. <i>Houskový knedlík</i> é o de pão e <i>bramborový knedlík</i>, o de batata.
-    </div>
+    <details class="fold">
+      <summary>Ver os pratos <span>12 pratos com tradução, toque para abrir</span></summary>
+      <div class="body">
+        <div class="callout">
+          <strong>O que são knedlíky?</strong>
+          Bolinhos de massa cozidos no vapor e servidos em fatias, para molhar no molho. Aparecem em metade dos pratos. <i>Houskový knedlík</i> é o de pão e <i>bramborový knedlík</i>, o de batata.
+        </div>
 
-    <div class="group">
-      <div class="subhead">Pratos principais</div>
-      <div class="grid2">
-        <div class="card">
-          <h3>Svíčková na smetaně</h3>
-          <div class="sub">Lombo ao molho de creme</div>
-          <p>Lombo bovino cozido devagar num molho cremoso de legumes (cenoura, salsão, salsa-raiz), com knedlíky, chantilly e geleia de cranberry. Parece estranho, mas é o prato mais querido do país.</p>
+        <div class="group">
+          <div class="subhead">Pratos principais</div>
+          <div class="grid2">
+            <div class="card">
+              <h3>Svíčková na smetaně</h3>
+              <div class="sub">Lombo ao molho de creme</div>
+              <p>Lombo bovino cozido devagar num molho cremoso de legumes (cenoura, salsão, salsa-raiz), com knedlíky, chantilly e geleia de cranberry. Parece estranho, mas é o prato mais querido do país.</p>
+            </div>
+            <div class="card">
+              <h3>Vepřová pečeně s knedlíkem a zelím</h3>
+              <div class="sub">Porco assado com knedlík e repolho · apelido: <i>vepřo knedlo zelo</i></div>
+              <p>O trio clássico: porco assado com cominho, knedlíky e repolho refogado agridoce. Também aparece como <i>Vepřová pečeně, houskový knedlík, dušené zelí</i>.</p>
+            </div>
+            <div class="card">
+              <h3>Guláš</h3>
+              <div class="sub">Gulache</div>
+              <p>Ensopado de carne com páprica e cebola, mais grosso que o húngaro. Vem com knedlíky e às vezes com cebola crua por cima. Combina muito com cerveja.</p>
+            </div>
+            <div class="card">
+              <h3>Pečená kachna</h3>
+              <div class="sub">Pato assado</div>
+              <p>Pato de pele crocante, com repolho roxo e knedlíky de pão ou de batata. Costuma vir em quarto ou meio pato.</p>
+            </div>
+            <div class="card">
+              <h3>Vepřové koleno</h3>
+              <div class="sub">Joelho de porco assado</div>
+              <p>Enorme, assado até a pele estalar, servido com mostarda, raiz-forte e pão. Dá para dividir em dois.</p>
+            </div>
+            <div class="card">
+              <h3>Smažený sýr</h3>
+              <div class="sub">Queijo frito</div>
+              <p>Fatia grossa de queijo (geralmente edam) empanada e frita, com molho tártaro e batata. Comida de bar, mas todo tcheco come.</p>
+            </div>
+            <div class="card">
+              <h3>Tatarák (tatarský biftek)</h3>
+              <div class="sub">Steak tartare</div>
+              <p><b>Carne bovina crua</b>, picada e temperada, geralmente com uma <b>gema crua</b> por cima. Vem com <i>topinky</i>, torradas fritas que você mesmo esfrega com alho cru. Peça só em restaurante bom e movimentado, como Kantýna ou Naše Maso.</p>
+            </div>
+            <div class="card">
+              <h3>Bramboráky</h3>
+              <div class="sub">Panquecas de batata</div>
+              <p>Batata ralada com alho e manjerona, frita até dourar. Vem como petisco, acompanhamento ou recheada.</p>
+            </div>
+          </div>
         </div>
-        <div class="card">
-          <h3>Vepřová pečeně s knedlíkem a zelím</h3>
-          <div class="sub">Porco assado com knedlík e repolho · apelido: <i>vepřo knedlo zelo</i></div>
-          <p>O trio clássico: porco assado com cominho, knedlíky e repolho refogado agridoce. Também aparece como <i>Vepřová pečeně, houskový knedlík, dušené zelí</i>.</p>
+
+        <div class="group">
+          <div class="subhead">Sopas e petiscos</div>
+          <div class="grid2">
+            <div class="card">
+              <h3>Česnečka</h3>
+              <div class="sub">Sopa de alho</div>
+              <p>Caldo com bastante alho, batata e croutons, às vezes com queijo. Famosa como remédio para ressaca. Outra sopa típica é a <b>kulajda</b>, cremosa, de batata e cogumelos com endro e ovo.</p>
+            </div>
+            <div class="card">
+              <h3>Nakládaný hermelín</h3>
+              <div class="sub">Queijo hermelín curtido</div>
+              <p>Queijo tipo camembert curtido no óleo com pimenta, alho e cebola. É o petisco clássico de cervejaria, comido com pão.</p>
+            </div>
+          </div>
         </div>
-        <div class="card">
-          <h3>Guláš</h3>
-          <div class="sub">Gulache</div>
-          <p>Ensopado de carne com páprica e cebola, mais grosso que o húngaro. Vem com knedlíky e às vezes com cebola crua por cima. Combina muito com cerveja.</p>
-        </div>
-        <div class="card">
-          <h3>Pečená kachna</h3>
-          <div class="sub">Pato assado</div>
-          <p>Pato de pele crocante, com repolho roxo e knedlíky de pão ou de batata. Costuma vir em quarto ou meio pato.</p>
-        </div>
-        <div class="card">
-          <h3>Vepřové koleno</h3>
-          <div class="sub">Joelho de porco assado</div>
-          <p>Enorme, assado até a pele estalar, servido com mostarda, raiz-forte e pão. Dá para dividir em dois.</p>
-        </div>
-        <div class="card">
-          <h3>Smažený sýr</h3>
-          <div class="sub">Queijo frito</div>
-          <p>Fatia grossa de queijo (geralmente edam) empanada e frita, com molho tártaro e batata. Comida de bar, mas todo tcheco come.</p>
-        </div>
-        <div class="card">
-          <h3>Tatarák (tatarský biftek)</h3>
-          <div class="sub">Steak tartare</div>
-          <p><b>Carne bovina crua</b>, picada e temperada, geralmente com uma <b>gema crua</b> por cima. Vem com <i>topinky</i>, torradas fritas que você mesmo esfrega com alho cru. Peça só em restaurante bom e movimentado, como Kantýna ou Naše Maso.</p>
-        </div>
-        <div class="card">
-          <h3>Bramboráky</h3>
-          <div class="sub">Panquecas de batata</div>
-          <p>Batata ralada com alho e manjerona, frita até dourar. Vem como petisco, acompanhamento ou recheada.</p>
+
+        <div class="group">
+          <div class="subhead">Doces</div>
+          <div class="grid2">
+            <div class="card">
+              <h3>Ovocné knedlíky</h3>
+              <div class="sub">Bolinhos de fruta</div>
+              <p>Massa recheada com ameixa, damasco ou morango, servida com manteiga derretida, açúcar e queijo fresco ralado (tvaroh). Para os tchecos pode ser até prato principal.</p>
+            </div>
+            <div class="card">
+              <h3>Jablečný štrúdl (ou závin)</h3>
+              <div class="sub">Strudel de maçã</div>
+              <p>Herança austro-húngara: massa fina enrolada com maçã, canela, nozes e passas, muitas vezes com chantilly ou sorvete. O do Café Louvre é famoso.</p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="group">
-      <div class="subhead">Sopas e petiscos</div>
-      <div class="grid2">
-        <div class="card">
-          <h3>Česnečka</h3>
-          <div class="sub">Sopa de alho</div>
-          <p>Caldo com bastante alho, batata e croutons, às vezes com queijo. Famosa como remédio para ressaca. Outra sopa típica é a <b>kulajda</b>, cremosa, de batata e cogumelos com endro e ovo.</p>
-        </div>
-        <div class="card">
-          <h3>Nakládaný hermelín</h3>
-          <div class="sub">Queijo hermelín curtido</div>
-          <p>Queijo tipo camembert curtido no óleo com pimenta, alho e cebola. É o petisco clássico de cervejaria, comido com pão.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="group">
-      <div class="subhead">Doces</div>
-      <div class="grid2">
-        <div class="card">
-          <h3>Ovocné knedlíky</h3>
-          <div class="sub">Bolinhos de fruta</div>
-          <p>Massa recheada com ameixa, damasco ou morango, servida com manteiga derretida, açúcar e queijo fresco ralado (tvaroh). Para os tchecos pode ser até prato principal.</p>
-        </div>
-        <div class="card">
-          <h3>Jablečný štrúdl (ou závin)</h3>
-          <div class="sub">Strudel de maçã</div>
-          <p>Herança austro-húngara: massa fina enrolada com maçã, canela, nozes e passas, muitas vezes com chantilly ou sorvete. O do Café Louvre é famoso.</p>
-        </div>
-      </div>
-    </div>
+    </details>
   </div></section>
 
   <section id="dicas"><div class="wrap">
@@ -492,7 +498,7 @@ const PLACES = [
   // Tchecos
   {id:"lokal", list:"czech", cat:"food", name:"Lokál (rede)", sub:"Tcheco · cerveja de tanque", lat:50.09050, lng:14.42530, q:"Lokál Dlouhááá Prague",
    html:"<p>A escolha segura: comida tcheca honesta (svíčková, guláš, řízek) e Pilsner Urquell de tanque, das melhores da cidade. São várias unidades, escolha a mais perto:</p><ul><li><b>Lokál Dlouhá</b>, Cidade Velha (a original, a mais conhecida)</li><li><b>Lokál U Bílé kuželky</b>, Malá Strana, perto da Ponte Carlos</li><li><b>Lokál Hamburk</b>, Karlín</li><li><b>Lokál Korunní</b>, Vinohrady</li><li><b>Lokál Nad Stromovkou</b>, Bubeneč</li></ul><p>Para jantar, vale reservar.</p>",
-   extraMaps:[["Ver todos os Lokál no Maps","Lokál Ambiente Praha"]]},
+   extraMaps:[["Ver todos os Lokál no Maps","Lokál Ambiente Praha"]], noPrimary:true},
   {id:"lokal-kuzelka", list:null, cat:"food", name:"Lokál U Bílé kuželky", lat:50.08680, lng:14.40800, q:"Lokál U Bílé kuželky"},
   {id:"lokal-hamburk", list:null, cat:"food", name:"Lokál Hamburk", lat:50.09280, lng:14.44560, q:"Lokál Hamburk"},
   {id:"kantyna", list:"czech", cat:"food", name:"Kantýna", sub:"Tcheco · carnes · Nové Město", lat:50.08250, lng:14.43000, q:"Kantýna Politických vězňů Prague",
