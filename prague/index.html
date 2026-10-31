@@ -25,6 +25,7 @@
   }
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth;scroll-padding-top:64px}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-text-size-adjust:100%}
 a{color:var(--river)}
@@ -41,6 +42,8 @@ nav.chips .wrap{display:flex;gap:8px;overflow-x:auto;padding-top:10px;padding-bo
 nav.chips .wrap::-webkit-scrollbar{display:none}
 nav.chips a{flex:none;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:.9rem;font-weight:500}
 nav.chips a:active{background:var(--roof-soft)}
+nav.chips a.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+section > .wrap > h2{position:sticky;top:var(--nav-h,53px);z-index:500;background:var(--bg);padding:8px 0}
 
 section{padding:28px 0 8px}
 section > .wrap > h2{font-size:1.5rem;margin-bottom:4px}
@@ -71,10 +74,13 @@ section > .wrap > h2{font-size:1.5rem;margin-bottom:4px}
 
 .subhead{font-family:Inter,sans-serif;font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:18px 0 8px}
 
-#map{height:70vh;min-height:380px;border-radius:var(--radius);border:1px solid var(--line);z-index:1}
-.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
-.filters button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer}
-.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.map-box{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--card)}
+#map{height:50vh;min-height:300px;max-height:440px;z-index:1}
+.filters{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:10px;border-bottom:1px solid var(--line)}
+.filters .label{font-size:.8rem;color:var(--muted);margin-right:2px}
+.filters button{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:5px 10px;cursor:pointer}
+.filters button i{width:10px;height:10px;border-radius:50%;border:1.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.filters button[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);font-weight:600}
 .leaflet-popup-content{font:14px/1.4 Inter,sans-serif;margin:12px 14px}
 .leaflet-popup-content b{font-size:15px}
 .leaflet-popup-content a{font-weight:600}
@@ -99,6 +105,7 @@ footer{color:var(--muted);font-size:.85rem;padding:28px 0 48px}
     <a href="#barco">Barco</a>
     <a href="#mais">Mais tempo</a>
     <a href="#comer">Comer</a>
+    <a href="#pratos">Pratos</a>
     <a href="#dicas">Dicas</a>
     <a href="#mapa">Mapa</a>
   </div>
@@ -138,6 +145,87 @@ footer{color:var(--muted);font-size:.85rem;padding:28px 0 48px}
     <div id="list-czech"></div>
     <div class="subhead">Para variar do tcheco</div>
     <div id="list-intl"></div>
+  </div></section>
+
+  <section id="pratos"><div class="wrap">
+    <h2>Pratos típicos</h2>
+    <p class="lead">Com o nome como aparece no cardápio, para reconhecer na hora de pedir.</p>
+    <div class="callout">
+      <strong>O que são knedlíky?</strong>
+      Bolinhos de massa cozidos no vapor e servidos em fatias, para molhar no molho. Aparecem em metade dos pratos. <i>Houskový knedlík</i> é o de pão e <i>bramborový knedlík</i>, o de batata.
+    </div>
+
+    <div class="subhead">Pratos principais</div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Svíčková na smetaně</h3>
+        <div class="sub">Lombo ao molho de creme</div>
+        <p>Lombo bovino cozido devagar num molho cremoso de legumes (cenoura, salsão, salsa-raiz), com knedlíky, chantilly e geleia de cranberry. Parece estranho, mas é o prato mais querido do país.</p>
+      </div>
+      <div class="card">
+        <h3>Vepřová pečeně s knedlíkem a zelím</h3>
+        <div class="sub">Porco assado com knedlík e repolho · apelido: <i>vepřo knedlo zelo</i></div>
+        <p>O trio clássico: porco assado com cominho, knedlíky e repolho refogado agridoce. Também aparece como <i>Vepřová pečeně, houskový knedlík, dušené zelí</i>.</p>
+      </div>
+      <div class="card">
+        <h3>Guláš</h3>
+        <div class="sub">Gulache</div>
+        <p>Ensopado de carne com páprica e cebola, mais grosso que o húngaro. Vem com knedlíky e às vezes com cebola crua por cima. Combina muito com cerveja.</p>
+      </div>
+      <div class="card">
+        <h3>Pečená kachna</h3>
+        <div class="sub">Pato assado</div>
+        <p>Pato de pele crocante, com repolho roxo e knedlíky de pão ou de batata. Costuma vir em quarto ou meio pato.</p>
+      </div>
+      <div class="card">
+        <h3>Vepřové koleno</h3>
+        <div class="sub">Joelho de porco assado</div>
+        <p>Enorme, assado até a pele estalar, servido com mostarda, raiz-forte e pão. Dá para dividir em dois.</p>
+      </div>
+      <div class="card">
+        <h3>Smažený sýr</h3>
+        <div class="sub">Queijo frito</div>
+        <p>Fatia grossa de queijo (geralmente edam) empanada e frita, com molho tártaro e batata. Comida de bar, mas todo tcheco come.</p>
+      </div>
+      <div class="card">
+        <h3>Tatarák (tatarský biftek)</h3>
+        <div class="sub">Steak tartare</div>
+        <p><b>Carne bovina crua</b>, picada e temperada, geralmente com uma <b>gema crua</b> por cima. Vem com <i>topinky</i>, torradas fritas que você mesmo esfrega com alho cru. Peça só em restaurante bom e movimentado, como Kantýna ou Naše Maso.</p>
+      </div>
+      <div class="card">
+        <h3>Bramboráky</h3>
+        <div class="sub">Panquecas de batata</div>
+        <p>Batata ralada com alho e manjerona, frita até dourar. Vem como petisco, acompanhamento ou recheada.</p>
+      </div>
+    </div>
+
+    <div class="subhead">Sopas e petiscos</div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Česnečka</h3>
+        <div class="sub">Sopa de alho</div>
+        <p>Caldo com bastante alho, batata e croutons, às vezes com queijo. Famosa como remédio para ressaca. Outra sopa típica é a <b>kulajda</b>, cremosa, de batata e cogumelos com endro e ovo.</p>
+      </div>
+      <div class="card">
+        <h3>Nakládaný hermelín</h3>
+        <div class="sub">Queijo hermelín curtido</div>
+        <p>Queijo tipo camembert curtido no óleo com pimenta, alho e cebola. É o petisco clássico de cervejaria, comido com pão.</p>
+      </div>
+    </div>
+
+    <div class="subhead">Doces</div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Ovocné knedlíky</h3>
+        <div class="sub">Bolinhos de fruta</div>
+        <p>Massa recheada com ameixa, damasco ou morango, servida com manteiga derretida, açúcar e queijo fresco ralado (tvaroh). Para os tchecos pode ser até prato principal.</p>
+      </div>
+      <div class="card">
+        <h3>Jablečný štrúdl (ou závin)</h3>
+        <div class="sub">Strudel de maçã</div>
+        <p>Herança austro-húngara: massa fina enrolada com maçã, canela, nozes e passas, muitas vezes com chantilly ou sorvete. O do Café Louvre é famoso.</p>
+      </div>
+    </div>
   </div></section>
 
   <section id="dicas"><div class="wrap">
@@ -197,15 +285,18 @@ footer{color:var(--muted);font-size:.85rem;padding:28px 0 48px}
 
   <section id="mapa"><div class="wrap">
     <h2>Mapa</h2>
-    <p class="lead">Toque num ponto para ver o nome e abrir no Google Maps.</p>
-    <div class="filters" id="filters">
-      <button data-cat="all" aria-pressed="true">Tudo</button>
-      <button data-cat="see" aria-pressed="false">Ver</button>
-      <button data-cat="boat" aria-pressed="false">Barco</button>
-      <button data-cat="park" aria-pressed="false">Parques</button>
-      <button data-cat="food" aria-pressed="false">Comer</button>
+    <p class="lead">Toque num ponto para ver o nome e abrir no Google Maps. Use os botões logo acima do mapa para mostrar só um tipo de lugar.</p>
+    <div class="map-box">
+      <div class="filters" id="filters">
+        <span class="label">Mostrar:</span>
+        <button data-cat="all" aria-pressed="true">Tudo</button>
+        <button data-cat="see" aria-pressed="false"><i style="background:#a8402b"></i>Ver</button>
+        <button data-cat="boat" aria-pressed="false"><i style="background:#2f5d73"></i>Barco</button>
+        <button data-cat="park" aria-pressed="false"><i style="background:#3f6b3a"></i>Parques</button>
+        <button data-cat="food" aria-pressed="false"><i style="background:#b8860b"></i>Comer</button>
+      </div>
+      <div id="map" role="region" aria-label="Mapa de Praga"></div>
     </div>
-    <div id="map" role="region" aria-label="Mapa de Praga"></div>
     <div class="actions" id="gmaps-list" hidden><a class="btn primary" href="#" target="_blank" rel="noopener">Salvar a lista no Google Maps</a></div>
   </div></section>
 </main>
@@ -388,6 +479,35 @@ document.addEventListener("click", e => {
 });
 
 }
+
+// Títulos fixos logo abaixo da barra de seções, e a seção atual destacada na barra
+const nav = document.querySelector("nav.chips");
+const navBar = nav.querySelector(".wrap");
+const setNavH = () => document.documentElement.style.setProperty("--nav-h", nav.offsetHeight + "px");
+setNavH();
+addEventListener("resize", setNavH);
+
+const chips = [...navBar.querySelectorAll("a")];
+let last;
+function markCurrent() {
+  const y = nav.offsetHeight + 80;
+  let cur = null;
+  for (const a of chips) {
+    const s = document.querySelector(a.hash);
+    if (s.getBoundingClientRect().top <= y) cur = a;
+  }
+  if (cur === last) return;
+  last = cur;
+  for (const a of chips) a.classList.toggle("on", a === cur);
+  if (cur) navBar.scrollTo({left: cur.offsetLeft - navBar.offsetLeft - 16, behavior: "smooth"});
+}
+let ticking = false;
+addEventListener("scroll", () => {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => { markCurrent(); ticking = false; });
+}, {passive: true});
+markCurrent();
 
 if (GMAPS_LIST_URL) {
   const box = document.getElementById("gmaps-list");
