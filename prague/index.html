@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Praga: guia de bolso</title>
+<meta name="description" content="Atrações, passeios, restaurantes e dicas práticas para visitar Praga.">
+<meta name="theme-color" content="#a8402b">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#faf6f0; --card:#ffffff; --ink:#241c17; --muted:#6d625a; --line:#e8dfd4;
+  --roof:#a8402b; --roof-soft:#f6e2da; --river:#2f5d73; --river-soft:#dce9ef;
+  --park:#3f6b3a; --park-soft:#e1ecdc; --gold:#b8860b; --gold-soft:#f5ead0;
+  --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#16120f; --card:#211b17; --ink:#f1e9e0; --muted:#b3a698; --line:#352c25;
+    --roof:#e0795f; --roof-soft:#3a2219; --river:#8fbfd6; --river-soft:#1b2c35;
+    --park:#9cc78f; --park-soft:#1e2d1b; --gold:#e3b64a; --gold-soft:#332a14;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-text-size-adjust:100%}
+a{color:var(--river)}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.2;margin:0}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+
+header.hero{background:linear-gradient(160deg,var(--roof) 0%,#7a2a1b 100%);color:#fff;padding:36px 0 28px}
+.hero h1{font-size:2.1rem}
+.hero p{margin:8px 0 0;opacity:.92;max-width:34ch}
+.hero .meta{font-size:.85rem;opacity:.8;margin-top:14px}
+
+nav.chips{position:sticky;top:0;z-index:1000;background:var(--bg);border-bottom:1px solid var(--line)}
+nav.chips .wrap{display:flex;gap:8px;overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:none}
+nav.chips .wrap::-webkit-scrollbar{display:none}
+nav.chips a{flex:none;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:.9rem;font-weight:500}
+nav.chips a:active{background:var(--roof-soft)}
+
+section{padding:28px 0 8px}
+section > .wrap > h2{font-size:1.5rem;margin-bottom:4px}
+.lead{color:var(--muted);margin:0 0 16px}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+.card h3{font-size:1.12rem;margin-bottom:2px}
+.card .sub{color:var(--muted);font-size:.85rem;margin-bottom:8px}
+.card p{margin:6px 0}
+.card ul{margin:6px 0;padding-left:20px}
+.card li{margin:3px 0}
+.tag{display:inline-block;font-size:.72rem;font-weight:600;letter-spacing:.02em;border-radius:6px;padding:2px 8px;margin-right:6px;vertical-align:middle;font-family:Inter,sans-serif}
+.t-see{background:var(--roof-soft);color:var(--roof)}
+.t-boat{background:var(--river-soft);color:var(--river)}
+.t-park{background:var(--park-soft);color:var(--park)}
+.t-food{background:var(--gold-soft);color:var(--gold)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.btn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:.88rem;font-weight:600;border-radius:10px;padding:8px 12px;border:1px solid var(--line);color:var(--ink);background:var(--bg);cursor:pointer;font-family:inherit}
+.btn.primary{background:var(--roof);border-color:var(--roof);color:#fff}
+@media (prefers-color-scheme: dark){.btn.primary{color:#1a120e}}
+
+.callout{border-left:4px solid var(--roof);background:var(--roof-soft);border-radius:0 var(--radius) var(--radius) 0;padding:12px 14px;margin:0 0 14px}
+.callout.blue{border-color:var(--river);background:var(--river-soft)}
+.callout strong{display:block;margin-bottom:2px}
+
+.grid2{display:grid;grid-template-columns:1fr;gap:0 12px}
+@media (min-width:640px){.grid2{grid-template-columns:1fr 1fr}}
+
+.subhead{font-family:Inter,sans-serif;font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:18px 0 8px}
+
+#map{height:70vh;min-height:380px;border-radius:var(--radius);border:1px solid var(--line);z-index:1}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.filters button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.leaflet-popup-content{font:14px/1.4 Inter,sans-serif;margin:12px 14px}
+.leaflet-popup-content b{font-size:15px}
+.leaflet-popup-content a{font-weight:600}
+.pin{width:16px;height:16px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+
+footer{color:var(--muted);font-size:.85rem;padding:28px 0 48px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Praga, guia de bolso</h1>
+    <p>O essencial para ver, onde comer bem fugindo das armadilhas de turista e as dicas práticas que fazem diferença.</p>
+    <div class="meta">Atualizado em outubro de 2026 · preços em coroas tchecas (CZK)</div>
+  </div>
+</header>
+
+<nav class="chips" aria-label="Seções">
+  <div class="wrap">
+    <a href="#ver">Ver</a>
+    <a href="#barco">Barco</a>
+    <a href="#mais">Mais tempo</a>
+    <a href="#comer">Comer</a>
+    <a href="#dicas">Dicas</a>
+    <a href="#mapa">Mapa</a>
+  </div>
+</nav>
+
+<main>
+  <section id="ver"><div class="wrap">
+    <h2>O principal</h2>
+    <p class="lead">Dá para fazer quase tudo a pé. Toque em "Abrir no Maps" para navegar até o lugar.</p>
+    <div id="list-see"></div>
+  </div></section>
+
+  <section id="barco"><div class="wrap">
+    <h2>Passeios de barco</h2>
+    <p class="lead">Dois estilos bem diferentes, dá para fazer os dois.</p>
+    <div id="list-boat"></div>
+  </div></section>
+
+  <section id="mais"><div class="wrap">
+    <h2>Se tiver mais tempo</h2>
+    <p class="lead">Melhor curtir a cidade com calma: parques, mirantes e bairros onde os locais vivem.</p>
+    <div id="list-more"></div>
+    <div class="callout blue">
+      <strong>E Kutná Hora?</strong>
+      Fica fora de Praga, cerca de 1 hora de trem, e toma um dia inteiro. É famosa pela capela decorada com ossos. Vale só se você já viu o principal e está com tempo sobrando. Para a maioria, um dia a mais curtindo Praga rende mais.
+    </div>
+  </div></section>
+
+  <section id="comer"><div class="wrap">
+    <h2>Onde comer</h2>
+    <p class="lead">Cozinha tcheca é pesada e muito boa, com cerveja excelente. Tem opções de outras cozinhas para variar.</p>
+    <div class="callout">
+      <strong>Dica para achar bons lugares</strong>
+      No Google Maps, filtre por nota 4,5 ou mais com centenas de avaliações. Fuja de restaurantes com cardápio de fotos na Praça da Cidade Velha e na Ponte Carlos: andando duas ruas, o preço cai e a comida melhora.
+    </div>
+    <div class="subhead">Tchecos</div>
+    <div id="list-czech"></div>
+    <div class="subhead">Para variar do tcheco</div>
+    <div id="list-intl"></div>
+  </div></section>
+
+  <section id="dicas"><div class="wrap">
+    <h2>Dicas práticas</h2>
+
+    <div class="card">
+      <h3>Transporte público</h3>
+      <p><b>No bonde e no ônibus:</b> entre pela porta com o símbolo de pagamento por aproximação (geralmente a do meio) e <b>compre o bilhete logo que embarcar</b>, no terminal laranja. Paga com cartão ou celular por aproximação, um bilhete por pessoa. O bilhete já sai valendo, não precisa validar.</p>
+      <p><b>No metrô:</b> o terminal laranja fica no saguão, <b>antes de descer as escadas</b> para a área paga. Compre ali antes de entrar.</p>
+      <p><b>Vale para tudo:</b> o bilhete serve para bonde, metrô e ônibus, quantas vezes quiser, só dentro do tempo comprado.</p>
+      <ul>
+        <li>30 min: 39 CZK · 90 min: 50 CZK (no terminal)</li>
+        <li>24 h: 150 CZK · 72 h: 350 CZK</li>
+        <li>O app <b>PID Lítačka</b> é um pouco mais barato (30 min por 36 CZK, 90 min por 46 CZK) e não exige cadastro. O bilhete só vale 1 minuto depois de ativado, então ative antes de embarcar.</li>
+        <li>Fiscais aparecem sem aviso e a multa é alta. Não arrisque.</li>
+      </ul>
+      <p><b>Uber e Bolt</b> funcionam bem em Praga.</p>
+      <div class="actions"><a class="btn" href="https://pid.cz/en/" target="_blank" rel="noopener">Site do transporte (PID)</a></div>
+    </div>
+
+    <div class="card">
+      <h3>Dinheiro</h3>
+      <ul>
+        <li>A moeda é a coroa tcheca (CZK), não o euro. Cartão funciona em quase todo lugar.</li>
+        <li>Se a maquininha ou o caixa eletrônico oferecer converter para reais ou euros, <b>recuse e pague em CZK</b>. A conversão deles é bem pior.</li>
+        <li><b>Banheiros públicos são pagos</b>, em geral 10 a 20 CZK. Alguns aceitam cartão ou moeda de euro, outros só moeda tcheca. Vale guardar umas moedas de troco, mas não compensa sacar dinheiro só para isso. O app <b>WC Kompas</b> mostra banheiros gratuitos.</li>
+        <li>Gorjeta: costuma-se arredondar ou deixar uns 10% quando o serviço foi bom.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Nos restaurantes e bares</h3>
+      <ul>
+        <li>Peça o <b>polední menu</b>, o almoço executivo do dia, servido por volta das 11h às 14h. Barato e geralmente muito bom.</li>
+        <li>Nos pubs tradicionais você senta e o garçom vem até você. Ele marca as cervejas num papelzinho na mesa. Para pedir a conta, diga <i>"zaplatím"</i> (vou pagar).</li>
+        <li>O trdelník (o "cone" de massa vendido em todo canto) não é tradicional tcheco, foi criado para turistas. Se quiser um doce local, procure <b>koláč</b>.</li>
+        <li>A cerveja de tanque (tankové pivo) da Pilsner Urquell é a experiência clássica.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Cerveja</h3>
+      <p>Aproveite, a cerveja tcheca é das melhores do mundo. A estrela é a <b>Pilsner Urquell</b>, de preferência a de tanque. Outras boas: <b>Matuška</b> (artesanal), <b>Kozel</b> (a escura é ótima), <b>Svijany</b> e <b>Staropramen</b>.</p>
+      <ul>
+        <li>Para pedir, basta dizer <b>"Pilsner"</b>. O tamanho padrão é 500 ml.</li>
+        <li>Quer menor? Peça <b>"small"</b>, que vem com uns 300 ml.</li>
+        <li>A espuma alta é normal e faz parte do jeito tcheco de servir, não é para economizar cerveja.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Para conhecer como um local</h3>
+      <p>O <b>USE-IT Prague</b> é um mapa gratuito feito por voluntários locais. Ninguém paga para aparecer nele, então as dicas são honestas: bares, cafés, mirantes e bairros fora do circuito turístico.</p>
+      <div class="actions"><a class="btn" href="https://www.use-it.travel/cities/prague" target="_blank" rel="noopener">Mapa USE-IT Prague</a></div>
+    </div>
+  </div></section>
+
+  <section id="mapa"><div class="wrap">
+    <h2>Mapa</h2>
+    <p class="lead">Toque num ponto para ver o nome e abrir no Google Maps.</p>
+    <div class="filters" id="filters">
+      <button data-cat="all" aria-pressed="true">Tudo</button>
+      <button data-cat="see" aria-pressed="false">Ver</button>
+      <button data-cat="boat" aria-pressed="false">Barco</button>
+      <button data-cat="park" aria-pressed="false">Parques</button>
+      <button data-cat="food" aria-pressed="false">Comer</button>
+    </div>
+    <div id="map" role="region" aria-label="Mapa de Praga"></div>
+    <div class="actions" id="gmaps-list" hidden><a class="btn primary" href="#" target="_blank" rel="noopener">Salvar a lista no Google Maps</a></div>
+  </div></section>
+</main>
+
+<footer><div class="wrap">
+  Horários e preços mudam: confira no site oficial antes de ir. Mapa © colaboradores do OpenStreetMap.
+</div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+// Link da lista salva no Google Maps (opcional). Deixe vazio para esconder o botão.
+const GMAPS_LIST_URL = "";
+
+const COLORS = {see:"#a8402b", boat:"#2f5d73", park:"#3f6b3a", food:"#b8860b"};
+const TAGS = {see:["Ver","t-see"], boat:["Barco","t-boat"], park:["Parque","t-park"], food:["Comer","t-food"]};
+
+// list: em qual seção o card aparece. cat: cor/filtro no mapa. q: busca no Google Maps.
+const PLACES = [
+  // O principal
+  {id:"orloj", list:"see", cat:"see", name:"Relógio Astronômico e Praça da Cidade Velha", sub:"Staré Město (Cidade Velha)", lat:50.08700, lng:14.42068, q:"Prague Astronomical Clock",
+   html:"<p>O relógio medieval na prefeitura antiga. A cada hora cheia, durante o dia, as figuras se movem por alguns segundos. Chegue uns minutos antes para pegar lugar.</p>"},
+  {id:"charles", list:"see", cat:"see", name:"Ponte Carlos", sub:"Liga a Cidade Velha a Malá Strana", lat:50.08646, lng:14.41140, q:"Charles Bridge Prague",
+   html:"<p>A ponte de pedra do século XIV com estátuas barrocas. Lotada durante o dia: atravesse cedo de manhã ou à noite para ver com calma.</p>"},
+  {id:"castle", list:"see", cat:"see", name:"Castelo de Praga", sub:"Hradčany", lat:50.08985, lng:14.39845, q:"Prague Castle first courtyard",
+   html:"<p>O maior complexo de castelo antigo do mundo, com a Catedral de São Vito. A área externa é livre. Para entrar na catedral, no Palácio Real e na Golden Lane é preciso comprar o ingresso de circuito.</p><ul><li><b>Troca da guarda:</b> de hora em hora no portão principal. A cerimônia completa, com fanfarra e troca de bandeira, é <b>todo dia ao meio-dia</b> no primeiro pátio, e dura uns 15 minutos. Chegue 15 minutos antes.</li></ul>",
+   links:[["Site do castelo","https://www.hrad.cz/en"]]},
+  {id:"golden", list:"see", cat:"see", name:"Golden Lane (Zlatá ulička)", sub:"Dentro do castelo", lat:50.09210, lng:14.40390, q:"Golden Lane Prague",
+   html:"<p>Ruazinha de casinhas coloridas encostadas na muralha do castelo. Entra no ingresso de circuito do castelo.</p>"},
+  {id:"jesus", list:"see", cat:"see", name:"Menino Jesus de Praga", sub:"Igreja de Nossa Senhora da Vitória · Karmelitská, Malá Strana", lat:50.08625, lng:14.40400, q:"Church of Our Lady Victorious Prague",
+   html:"<p>A famosa imagem do Menino Jesus de Praga fica nesta igreja carmelita em Malá Strana. Entrada gratuita.</p>"},
+  {id:"josefov", list:"see", cat:"see", name:"Bairro Judeu (Josefov)", sub:"Staré Město, ao lado da Cidade Velha", lat:50.09020, lng:14.41880, q:"Old-New Synagogue Prague",
+   html:"<p>Um dos conjuntos judaicos históricos mais importantes da Europa. Com um único ingresso do Museu Judaico você visita as sinagogas Maisel, Pinkas, Velha-Nova e Espanhola, além do Antigo Cemitério Judeu.</p><ul><li><b>Fechado aos sábados</b> e em feriados judaicos.</li><li>Para quem gosta de história, vale muito fazer com <b>guia</b>: o contexto muda a visita. Dá para contratar tours a pé guiados aqui e em outros pontos da cidade.</li></ul>",
+   links:[["Ingressos (Museu Judaico)","https://www.jewishmuseum.cz/en/visit/admission/"]]},
+  {id:"vaclavske", list:"see", cat:"see", name:"Praça Venceslau (Václavské náměstí)", sub:"Nové Město (Cidade Nova)", lat:50.08130, lng:14.42780, q:"Václavské náměstí",
+   html:"<p>Mais avenida que praça, com o Museu Nacional no alto. Foi palco de momentos decisivos da história tcheca, como os protestos de 1968 e a Revolução de Veludo de 1989. Bom para passear e ver a arquitetura das galerias comerciais.</p>"},
+  {id:"narodni", list:"see", cat:"see", name:"Národní třída e Teatro Nacional", sub:"Entre a Cidade Velha e o rio", lat:50.08170, lng:14.41700, q:"Národní třída Praha",
+   html:"<p>Avenida elegante que vai até o rio e o Teatro Nacional, de cúpula dourada. Tem um memorial da Revolução de Veludo de 17 de novembro de 1989 e o Café Louvre. Na beira do rio, a vista para o castelo é linda.</p>"},
+  {id:"petrin", list:"more", cat:"see", name:"Colina e torre de Petřín", sub:"Malá Strana · opcional, para quem curte caminhar", lat:50.08355, lng:14.39505, q:"Petřín Lookout Tower",
+   html:"<p>Uma \"mini Torre Eiffel\" no alto de uma colina arborizada, com vista para a cidade inteira. Não é obrigatório.</p><ul><li><b>Junto com o castelo:</b> só para quem está acostumado a andar bastante. Dá para pegar o bonde 22 ou 23 até a parada Pohořelec, no alto, e ir descendo a pé até Petřín. Senão, melhor fazer em outro dia ou pular.</li><li><b>Funicular (opcional):</b> sobe da estação Újezd, das 7h às 22h15, a cada ~10 min, com vagões novos desde setembro de 2026. Tarifa própria de 100 CZK (90 CZK no app PID Lítačka). Quem tem bilhete de 24 h ou 72 h não paga a mais.</li><li>Dá para subir a pé pelos jardins também, uns 30 minutos.</li></ul>",
+   links:[["Funicular (PID)","https://pid.cz/lanova-draha/"]]},
+  {id:"petrin-funicular", list:null, cat:"see", name:"Funicular de Petřín (estação Újezd)", lat:50.08130, lng:14.40540, q:"Petřín funicular Újezd"},
+
+  // Barco
+  {id:"venice", list:"boat", cat:"boat", name:"Veneza de Praga (canal Čertovka)", sub:"Saída perto da Ponte Carlos, lado da Cidade Velha", lat:50.08600, lng:14.41430, q:"Prague Venice boat Křižovnické náměstí 3",
+   html:"<p>Barcos pequenos de madeira que passam sob a Ponte Carlos e entram no canal Čertovka, estreito demais para os barcos grandes. Cerca de 45 minutos, com guia e um drinque incluído. O ingresso também dá entrada no pequeno Museu da Ponte Carlos.</p>",
+   links:[["Site","https://www.prazskebenatky.cz/"]]},
+  {id:"steam", list:"boat", cat:"boat", name:"Cruzeiro panorâmico pelo Vltava", sub:"Prague Steamboats · cais no Rašínovo nábřeží", lat:50.07330, lng:14.41350, q:"Prague Steamboats Rašínovo nábřeží",
+   html:"<p>Cruzeiro de <b>1 hora, ida e volta</b> pelo rio, passando sob as pontes e com vista para o castelo. A empresa existe desde 1865 e também tem opções com almoço ou jantar a bordo. Sai do cais nº 2, no Rašínovo nábřeží, entre as pontes Jirásek e Palacký. Comprar online costuma ter desconto.</p>",
+   links:[["Site e horários","https://www.praguesteamboats.com/vltava-river-cruises-in-prague"]]},
+
+  // Mais tempo
+  {id:"vysehrad", list:"more", cat:"park", name:"Vyšehrad", sub:"Fortaleza sobre o rio, sul do centro", lat:50.06450, lng:14.41830, q:"Vyšehrad",
+   html:"<p>Fortaleza antiga com muralhas, basílica, cemitério histórico e uma das melhores vistas do rio. Bem menos turística que o castelo. Combina com almoço no U Kroka, logo ali.</p>"},
+  {id:"malastrana-gardens", list:"more", cat:"park", name:"Jardim Wallenstein (Valdštejnská zahrada)", sub:"Malá Strana, perto do metrô Malostranská", lat:50.08980, lng:14.40640, q:"Wallenstein Garden Prague",
+   html:"<p>Jardim barroco murado com pavões soltos, entrada gratuita. Aberto na temporada mais quente (aprox. abril a outubro).</p>"},
+  {id:"vojan", list:"more", cat:"park", name:"Vojanovy sady", sub:"Malá Strana", lat:50.08930, lng:14.40950, q:"Vojanovy sady",
+   html:"<p>Um dos jardins mais antigos de Praga, escondido atrás de muros. Silencioso, com bancos sob árvores frutíferas e pavões. Aberto o ano todo.</p>"},
+  {id:"kampa", list:"more", cat:"park", name:"Ilha Kampa e Muro de Lennon", sub:"Malá Strana, embaixo da Ponte Carlos", lat:50.08560, lng:14.40760, q:"Kampa Island Prague",
+   html:"<p>Parque à beira-rio com vista para a Ponte Carlos, a dois passos do muro grafitado em homenagem a John Lennon.</p>"},
+  {id:"letna", list:"more", cat:"park", name:"Parque Letná", sub:"Colina ao norte do centro", lat:50.09550, lng:14.42150, q:"Letná Park Prague",
+   html:"<p>Mirante clássico sobre as pontes do Vltava e beer garden popular com os locais. Ótimo no fim da tarde.</p>"},
+  {id:"riegrovy", list:"more", cat:"park", name:"Riegrovy sady", sub:"Vinohrady", lat:50.07850, lng:14.44200, q:"Riegrovy sady",
+   html:"<p>Parque de bairro com gramado em declive e vista para o castelo no pôr do sol. Tem beer garden. Bom para ver o bairro de Vinohrady, onde muitos locais moram.</p>"},
+  {id:"naplavka", list:"more", cat:"park", name:"Náplavka (beira-rio)", sub:"Rašínovo nábřeží, Nové Město", lat:50.06950, lng:14.41450, q:"Náplavka Prague",
+   html:"<p>Calçadão à beira do rio com barcos-bar, comidinhas e cerveja. Aos sábados de manhã tem feira de produtores. Movimentado nas noites quentes.</p>"},
+
+  // Tchecos
+  {id:"lokal", list:"czech", cat:"food", name:"Lokál (rede)", sub:"Tcheco · cerveja de tanque", lat:50.09050, lng:14.42530, q:"Lokál Dlouhááá Prague",
+   html:"<p>A escolha segura: comida tcheca honesta (svíčková, guláš, řízek) e Pilsner Urquell de tanque. São várias unidades, escolha a mais perto:</p><ul><li><b>Lokál Dlouhá</b>, Cidade Velha (a original, a mais conhecida)</li><li><b>Lokál U Bílé kuželky</b>, Malá Strana, perto da Ponte Carlos</li><li><b>Lokál Hamburk</b>, Karlín</li><li><b>Lokál Korunní</b>, Vinohrady</li><li><b>Lokál Nad Stromovkou</b>, Bubeneč</li></ul><p>Para jantar, vale reservar.</p>",
+   extraMaps:[["Ver todos os Lokál no Maps","Lokál Ambiente Praha"]]},
+  {id:"lokal-kuzelka", list:null, cat:"food", name:"Lokál U Bílé kuželky", lat:50.08680, lng:14.40800, q:"Lokál U Bílé kuželky"},
+  {id:"lokal-hamburk", list:null, cat:"food", name:"Lokál Hamburk", lat:50.09280, lng:14.44560, q:"Lokál Hamburk"},
+  {id:"kantyna", list:"czech", cat:"food", name:"Kantýna", sub:"Tcheco · carnes · Nové Město", lat:50.08250, lng:14.43000, q:"Kantýna Politických vězňů Prague",
+   html:"<p>Metade açougue, metade restaurante. Você escolhe o corte no balcão e come em mesas coletivas. Tartar e hambúrguer famosos. Não aceita reserva, tem fila no almoço.</p>"},
+  {id:"nasemaso", list:"czech", cat:"food", name:"Naše Maso", sub:"Tcheco · açougue · Cidade Velha", lat:50.09060, lng:14.42630, q:"Naše maso Dlouhá Prague",
+   html:"<p>Açougue com balcão onde se come em pé: chlebíček (sanduíche aberto), tartar, embutidos da casa. Almoço rápido e excelente, a poucos passos do Lokál Dlouhá.</p>"},
+  {id:"kachnicky", list:"czech", cat:"food", name:"U Modré Kachničky", sub:"Tcheco · jantar especial · Malá Strana", lat:50.08560, lng:14.40500, q:"U Modré Kachničky Nebovidská",
+   html:"<p>O \"Patinho Azul\": cozinha tcheca de caça e pato num ambiente antigo e romântico. Mais caro, ótimo para um jantar especial depois do castelo. Reserve.</p>"},
+  {id:"kuchyn", list:"czech", cat:"food", name:"Kuchyň", sub:"Tcheco · com vista · ao lado do castelo", lat:50.08960, lng:14.39780, q:"Kuchyň Hradčanské náměstí 1",
+   html:"<p>Na praça em frente ao castelo, no Palácio Salm. Comida tcheca, boa cerveja e um terraço com uma das melhores vistas da cidade. Ideal para almoçar na visita ao castelo.</p>"},
+  {id:"ukroka", list:"czech", cat:"food", name:"U Kroka", sub:"Tcheco · Vyšehrad", lat:50.06640, lng:14.41940, q:"U Kroka Vratislavova 12",
+   html:"<p>Restaurante familiar na subida para Vyšehrad, frequentado por locais. Comida tcheca caprichada e preço justo. Reserve para o jantar.</p>"},
+  {id:"vycep", list:"czech", cat:"food", name:"Výčep", sub:"Tcheco moderno · Vinohrady · Bib Gourmand Michelin", lat:50.07560, lng:14.45200, q:"Výčep Korunní 92",
+   html:"<p>Pub tcheco reinventado: fazem pão, embutidos e chucrute na casa. Reconhecido pelo Guia Michelin como boa comida a preço justo. Fora do centro turístico, vale a viagem.</p>"},
+  {id:"eska", list:"czech", cat:"food", name:"Eska", sub:"Tcheco moderno · padaria · Karlín", lat:50.09330, lng:14.45320, q:"Eska Pernerova 49",
+   html:"<p>Restaurante e padaria numa fábrica do século XIX reformada, no bairro de Karlín. Cozinha tcheca moderna, ótimo para brunch e almoço.</p>"},
+  {id:"pivovarsky", list:"czech", cat:"food", name:"Pivovarský Dům", sub:"Tcheco · microcervejaria · Nové Město", lat:50.07590, lng:14.42280, q:"Pivovarský dům Prague",
+   html:"<p>Cervejaria que produz suas próprias cervejas, incluindo sabores diferentes (trigo, café, urtiga). Peça a degustação e um prato tcheco clássico.</p>"},
+  {id:"savoy", list:"czech", cat:"food", name:"Café Savoy", sub:"Café histórico · café da manhã · Malá Strana", lat:50.08130, lng:14.40720, q:"Café Savoy Vítězná Prague",
+   html:"<p>Um dos cafés mais bonitos da cidade, com teto neorrenascentista de 1893. Café da manhã e doces excelentes. Reserve no fim de semana.</p>"},
+
+  {id:"louvre", list:"czech", cat:"food", name:"Café Louvre", sub:"Café histórico · Národní třída", lat:50.08190, lng:14.41890, q:"Café Louvre Národní Praha",
+   html:"<p>Café de 1902, frequentado por Kafka e Einstein. Interior Belle Époque, sala de bilhar e strudel de maçã famoso. Mais tranquilo e acessível que o Savoy.</p>"},
+  {id:"chains", list:"czech", cat:"food", name:"Kozlovna e Potrefená Husa", sub:"Redes de cervejaria tcheca · várias unidades", q:"Kozlovna Praha",
+   html:"<p>Duas redes confiáveis para quando não houver nada melhor por perto: a Kozlovna é da cerveja Kozel e a Potrefená Husa, da Staropramen. Não são destino por si só, mas a comida tcheca é honesta, o preço é justo e é bem melhor que as armadilhas de turista.</p>",
+   extraMaps:[["Kozlovna no Maps","Kozlovna Praha"],["Potrefená Husa no Maps","Potrefená Husa Praha"]], noPrimary:true},
+
+  // Outras cozinhas
+  {id:"pho", list:"intl", cat:"food", name:"Pho Vietnam Tuan & Lan", sub:"Vietnamita · Vinohrady", lat:50.07620, lng:14.43530, q:"Pho Vietnam Tuan & Lan Anglická",
+   html:"<p>Praga tem uma grande comunidade vietnamita e comida vietnamita excelente. Esse é um dos phos mais elogiados da cidade, simples e barato.</p>"},
+  {id:"banhmi", list:"intl", cat:"food", name:"Bánh Mì Makers", sub:"Vietnamita · sanduíche · Cidade Velha", lat:50.09075, lng:14.42650, q:"Bánh Mì Makers Dlouhá",
+   html:"<p>Bánh mì (sanduíche vietnamita) feito na hora, na rua Dlouhá. Lanche rápido e barato.</p>"},
+  {id:"divinis", list:"intl", cat:"food", name:"Divinis", sub:"Italiano · Cidade Velha · Bib Gourmand Michelin", lat:50.08860, lng:14.42400, q:"Divinis Týnská Prague",
+   html:"<p>Italiano refinado num sobrado de vários andares, perto da Praça da Cidade Velha. Bom para um jantar mais caprichado.</p>"},
+  {id:"dejvicka", list:"intl", cat:"food", name:"Dejvická 34", sub:"Ítalo-tcheco · Dejvice · Bib Gourmand Michelin", lat:50.10180, lng:14.39270, q:"Dejvická 34 by Tomáš Černý",
+   html:"<p>Bistrô de bairro com massas e cozidos, de um chef com vinte anos em cozinhas italianas. Fora do centro, frequentado por locais.</p>"},
+  {id:"nuova", list:"intl", cat:"food", name:"Pizza Nuova", sub:"Pizza napolitana · perto da Náměstí Republiky", lat:50.09000, lng:14.42950, q:"Pizza Nuova Revoluční Prague",
+   html:"<p>Pizza napolitana de verdade, do mesmo grupo do Lokál. Prático para quando bater vontade de algo familiar.</p>"},
+  {id:"beas", list:"intl", cat:"food", name:"Dhaba Beas", sub:"Indiano vegetariano · várias unidades", lat:50.08060, lng:14.42180, q:"Dhaba Beas Vladislavova",
+   html:"<p>Bufê indiano vegetariano pago por peso. Barato, rápido e uma boa pausa da comida pesada. Tem várias unidades pelo centro.</p>",
+   extraMaps:[["Ver todas as unidades","Dhaba Beas Praha"]]}
+];
+
+const mapsUrl = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q + (/(Prague|Praha)/.test(q) ? "" : ", Praha"));
+
+function card(p){
+  const [label, cls] = TAGS[p.cat];
+  const links = (p.links || []).map(([t,u]) => `<a class="btn" href="${u}" target="_blank" rel="noopener">${t}</a>`).join("");
+  const extra = (p.extraMaps || []).map(([t,q]) => `<a class="btn primary" href="${mapsUrl(q)}" target="_blank" rel="noopener">${t}</a>`).join("");
+  return `<article class="card" id="c-${p.id}">
+    <h3><span class="tag ${cls}">${label}</span>${p.name}</h3>
+    ${p.sub ? `<div class="sub">${p.sub}</div>` : ""}
+    ${p.html || ""}
+    <div class="actions">
+      ${p.noPrimary ? "" : `<a class="btn primary" href="${mapsUrl(p.q)}" target="_blank" rel="noopener">Abrir no Maps</a>`}
+      ${p.lat ? `<button class="btn" data-show="${p.id}">Ver no mapa</button>` : ""}
+      ${extra}${links}
+    </div>
+  </article>`;
+}
+
+for (const key of ["see","boat","more","czech","intl"]) {
+  const el = document.getElementById("list-" + key);
+  el.innerHTML = PLACES.filter(p => p.list === key).map(card).join("");
+}
+
+// Mapa (se a biblioteca não carregar, os botões abrem o Google Maps)
+const HAS_MAP = typeof L !== "undefined";
+if (!HAS_MAP) {
+  document.getElementById("map").outerHTML = '<p class="lead">O mapa não carregou. Use os botões "Abrir no Maps" de cada lugar.</p>';
+  document.getElementById("filters").hidden = true;
+  document.addEventListener("click", e => {
+    const b = e.target.closest("[data-show]"); if (!b) return;
+    const p = PLACES.find(x => x.id === b.dataset.show);
+    window.open(mapsUrl(p.q), "_blank", "noopener");
+  });
+} else {
+const map = L.map("map", {scrollWheelZoom:false, tap:true}).setView([50.0855, 14.4170], 14);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+const markers = {};
+for (const p of PLACES) {
+  if (!p.lat) continue;
+  const icon = L.divIcon({className:"", html:`<div class="pin" style="background:${COLORS[p.cat]}"></div>`, iconSize:[16,16], iconAnchor:[8,8], popupAnchor:[0,-8]});
+  const m = L.marker([p.lat, p.lng], {icon}).bindPopup(`<b>${p.name}</b><br><a href="${mapsUrl(p.q)}" target="_blank" rel="noopener">Abrir no Google Maps</a>`);
+  m.cat = p.cat;
+  m.addTo(map);
+  markers[p.id] = m;
+}
+
+document.getElementById("filters").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  const cat = b.dataset.cat;
+  document.querySelectorAll("#filters button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  for (const m of Object.values(markers)) {
+    const show = cat === "all" || m.cat === cat;
+    if (show && !map.hasLayer(m)) m.addTo(map);
+    if (!show && map.hasLayer(m)) map.removeLayer(m);
+  }
+});
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-show]"); if (!b) return;
+  const m = markers[b.dataset.show];
+  document.querySelector('#filters [data-cat="all"]').click();
+  document.getElementById("mapa").scrollIntoView();
+  setTimeout(() => { map.invalidateSize(); map.setView(m.getLatLng(), 16); m.openPopup(); }, 350);
+});
+
+}
+
+if (GMAPS_LIST_URL) {
+  const box = document.getElementById("gmaps-list");
+  box.querySelector("a").href = GMAPS_LIST_URL;
+  box.hidden = false;
+}
+</script>
+</body>
+</html>
